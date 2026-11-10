@@ -1,0 +1,84 @@
+name: Selenium Tests
+
+on:
+  push:
+    branches: [main, master]
+
+  pull_request:
+    branches: [main, master]
+
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: "Browser to run tests on"
+        required: true
+        default: "chrome"
+        type: choice
+        options:
+          - chrome
+          - firefox
+
+      environment:
+        description: "Environment to run tests on"
+        required: true
+        default: "qa"
+        type: choice
+        options:
+          - qa
+          - staging
+          - production
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: "temurin"
+          java-version: "25"
+          cache: "maven"
+
+      - name: Build project
+        run: mvn -B clean install -DskipTests --no-transfer-progress
+
+      - name: Run Selenium tests
+        run: >
+          mvn clean test
+          -PRegression
+          -Dbrowser=${{ inputs.browser || 'chrome' }}
+          -Denv=${{ inputs.environment || 'qa' }}
+          -Dheadless=true
+          --no-transfer-progress
+
+      - name: Generate Allure HTML Report
+        if: always()
+        run: mvn allure:report
+
+      - name: Upload Allure HTML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-html-report
+          path: target/site/allure-maven-plugin/
+          if-no-files-found: warn
+
+      - name: Upload Failure Screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-failure-screenshots
+          path: target/reports/screenshots/
+          if-no-files-found: ignore
+
+      - name: Upload Surefire Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-results
+          path: target/surefire-reports/
+          if-no-files-found: ignore

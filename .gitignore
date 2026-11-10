@@ -1,0 +1,105 @@
+# ==============================
+# Maven build files
+# ==============================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+config.properties
+
+# ==============================
+# Compiled Java files
+# ==============================
+*.class
+*.jar
+*.war
+*.ear
+
+# ==============================
+# IntelliJ IDEA
+# ==============================
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ==============================
+# Eclipse
+# ==============================
+.project
+.classpath
+.settings/
+bin/
+
+# ==============================
+# Visual Studio Code
+# ==============================
+.vscode/
+
+# ==============================
+# Logs
+# ==============================
+*.log
+logs/
+
+# ==============================
+# TestNG generated reports
+# ==============================
+test-output/
+
+# ==============================
+# Allure generated files
+# ==============================
+allure-results/
+allure-report/
+
+# ==============================
+# Framework-generated reports
+# ==============================
+reports/
+extent-reports/
+target/reports/
+target/surefire-reports/
+target/site/
+
+# ==============================
+# Screenshots, videos and traces
+# ==============================
+screenshots/
+videos/
+traces/
+target/screenshots/
+target/reports/screenshots/
+target/reports/traces/
+
+# ==============================
+# Environment and secret files
+# ==============================
+.env
+.env.*
+*.env
+
+# Local configuration containing secrets
+config-local.properties
+application-local.properties
+secrets.properties
+
+# ==============================
+# Operating-system files
+# ==============================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==============================
+# Temporary files
+# ==============================
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
