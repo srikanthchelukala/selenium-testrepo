@@ -2,6 +2,7 @@ package com.hrm.base;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -13,6 +14,17 @@ public class BaseTest {
 
     @BeforeSuite
     public void initDriver(){
+          boolean headless = Boolean.parseBoolean(
+                System.getProperty("headless", "false")
+        );
+         ChromeOptions options = new ChromeOptions();
+          if (headless) {
+            options.addArguments("--headless=new");
+        }
+         options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--window-size=1920,1080");
         driver=new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
